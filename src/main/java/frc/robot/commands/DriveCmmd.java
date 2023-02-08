@@ -8,15 +8,20 @@ import frc.robot.subsystems.DriveSubsystem;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import static frc.robot.ConstantsFolder.RobotConstants.Drive.*;
 
 /** An example command that uses an example subsystem. */
 public class DriveCmmd extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_subsystem;
-  private final DoubleSupplier fowDoubleSupplier;
+  private final DoubleSupplier m_fowDoubleSupplier;
   private final DoubleSupplier m_thetaDoubleSupplier;
-  private Boolean m_turbo;
+  private final  Boolean m_turbo;
+  private final SlewRateLimiter m_slewRateLimiter;
+  
 
   /**
    * Creates a new ExampleCommand.
@@ -25,9 +30,10 @@ public class DriveCmmd extends CommandBase {
    */
   public DriveCmmd(DriveSubsystem subsystem, DoubleSupplier f, DoubleSupplier t, Boolean turbo) {
     m_subsystem = subsystem;
-    fowDoubleSupplier = f;
+    m_fowDoubleSupplier = f;
     m_thetaDoubleSupplier = t;
     m_turbo = turbo;
+    m_slewRateLimiter = new SlewRateLimiter(3, -3, 0);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -41,11 +47,14 @@ public class DriveCmmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double m_foward = m_slewRateLimiter.calculate( m_fowDoubleSupplier.getAsDouble());
+    double m_theta =  m_slewRateLimiter.calculate(  m_thetaDoubleSupplier.getAsDouble());
+    
     if(m_turbo){
-      m_subsystem.TurboJoystickDrive(fowDoubleSupplier.getAsDouble(), m_thetaDoubleSupplier.getAsDouble());
+      m_subsystem.TurboJoystickDrive(m_foward, m_theta);
     }
     if(!m_turbo){
-      m_subsystem.NormalDrive(fowDoubleSupplier.getAsDouble(), m_thetaDoubleSupplier.getAsDouble());
+      m_subsystem.NormalDrive(m_foward, m_theta);
     }
     
   

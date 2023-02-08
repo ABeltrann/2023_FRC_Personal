@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import static frc.robot.ConstantsFolder.RobotConstants.PathPlanner.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -54,12 +55,19 @@ CommandXboxController controller = new CommandXboxController(0);
   // final List<Obstacle> obstacles = new ArrayList<Obstacle>();
   final List<Obstacle> obstacles = FieldConstants.obstacles;
 
+  
+
 
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
+    /* 
+    EVENT_MAP.put("Arm Cmmd", null);
+    EVENT_MAP.put("Arm Cmmd", null);
+    EVENT_MAP.put("Arm Cmmd", null);
+    EVENT_MAP.put("Arm Cmmd", null);
+    */
     // Configure the button bindings
     driveSubsystem.setDefaultCommand(new DriveCmmd(driveSubsystem,
      ()->controller.getLeftY(), ()->controller.getRightX(), false));

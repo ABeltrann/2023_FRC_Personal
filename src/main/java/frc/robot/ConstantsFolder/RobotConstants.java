@@ -7,6 +7,7 @@ package frc.robot.ConstantsFolder;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.ejml.equation.Variable;
@@ -40,6 +41,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 /**
@@ -57,6 +59,8 @@ public final class RobotConstants {
         public static final int FL_ID = 0;
         public static final int BR_ID = 0;
         public static final int BL_ID = 0;
+
+        public static final double DEADBAND = 0.05;
 
         public static final double NORMAL_FOWARD_FF = 0.0;
         public static final double NORMAL_TURN_FF = 0.0;
@@ -130,6 +134,9 @@ public final class RobotConstants {
         public static final TrajectoryConfig TRAJECTORY_CONFIG =
          new TrajectoryConfig(MAX_VELOCTIY, MAX_ACCELERATION).setKinematics(KINEMATICS).addConstraint(AUTO_VOLTAGE_CONSTRAINT); 
 
+    }
+    public static final class PathPlanner{
+        public static HashMap<String, Command> EVENT_MAP = new HashMap<>();
     }
     public static final class FiducialTracking{
 

@@ -76,6 +76,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_lControllerGroup.setInverted(false);
 
     m_drive = new DifferentialDrive(m_rControllerGroup, m_lControllerGroup);
+    m_drive.setDeadband(DEADBAND);
     
     m_rightEncoder = m_FRMotor.getAlternateEncoder(
       SparkMaxAlternateEncoder.Type.kQuadrature, 8192);
@@ -211,8 +212,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
   
   public static PPRamseteCommand followTrajCommand(DriveSubsystem driveSubsystem,
-   PoseEstimatorSubsystem poseEstimatorSubsystem,
-    PathPlannerTrajectory trajectory ){
+  PoseEstimatorSubsystem poseEstimatorSubsystem,
+  PathPlannerTrajectory trajectory ){
 
       return new PPRamseteCommand(
         trajectory, poseEstimatorSubsystem::getPose2d, RAMSETE_CONTROLLER, KINEMATICS,
